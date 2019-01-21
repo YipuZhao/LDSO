@@ -28,10 +28,28 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
 # required libs
-find_package(Eigen3 REQUIRED)
-find_package(OpenCV REQUIRED)
+
+# customize eigen dir
+# find_package(Eigen3 3.1.0 REQUIRED)
+set( EIGEN3_INCLUDE_DIR /usr/include/eigen3 )
+MESSAGE("EIGEN include dir: " ${EIGEN3_INCLUDE_DIR})
+
+# customize opencv dir
+set(OpenCV_DIR /opt/opencv3/share/OpenCV)
+find_package(OpenCV 3.4.1 REQUIRED)
+# set(OpenCV_DIR /opt/opencv2/share/OpenCV)
+# find_package(OpenCV 2.4.13 REQUIRED core ocl)
+MESSAGE("OpenCV include dir: " ${OpenCV_INCLUDE_DIRS})
+
+# customize pangolin dir
+# set(Pangolin_DIR /opt/Pangolin/lib/cmake/Pangolin/)
+# find_package(Pangolin REQUIRED)
+set(Pangolin_FOUND TRUE)
+set(Pangolin_INCLUDE_DIRS /opt/Pangolin/include/)
+set(Pangolin_LIBRARIES /opt/Pangolin/lib/libpangolin.so)
+MESSAGE("Pangolin include dir: " ${Pangolin_INCLUDE_DIRS})
+
 find_package(Glog REQUIRED)
-find_package(Pangolin REQUIRED)
 
 # optional libs
 find_package(LibZip QUIET)
