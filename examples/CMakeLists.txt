@@ -11,4 +11,5 @@ target_link_libraries( run_dso_euroc
 # Kitti dataset
 add_executable( run_dso_kitti run_dso_kitti.cc )
 target_link_libraries( run_dso_kitti
-  ldso ${THIRD_PARTY_LIBS} )
+  ldso 
+  ${THIRD_PARTY_LIBS} )

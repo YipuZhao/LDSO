@@ -79,6 +79,8 @@ include_directories(
 )
 
 set( THIRD_PARTY_LIBS
+        GLEW
+        GL
         ${OpenCV_LIBS}
         ${GLOG_LIBRARY}
         ${Pangolin_LIBRARIES}
