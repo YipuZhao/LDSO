@@ -28,9 +28,13 @@ using namespace ldso;
  * Please specify the dataset directory below or by command line parameters
  *********************************************************************************/
 
-std::string source = "/media/Data/Dataset/Kitti/dataset/sequences/00";
-std::string output_file = "./results.txt";
-std::string calib = "./examples/Kitti/Kitti00-02.txt";
+//std::string source = "/media/Data/Dataset/Kitti/dataset/sequences/00";
+//std::string output_file = "./results.txt";
+//std::string calib = "./examples/Kitti/Kitti00-02.txt";
+//std::string vocPath = "./vocab/orbvoc.dbow3";
+std::string source = "";
+std::string output_file = "";
+std::string calib = "";
 std::string vocPath = "./vocab/orbvoc.dbow3";
 
 int startIdx = 0;
