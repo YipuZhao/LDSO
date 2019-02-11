@@ -8,7 +8,7 @@ import signal
 SeqNameList = ['left_cam'];
 Result_root = '/mnt/DATA/tmp/NewCollege/DSO_Mono_Baseline/'
 
-Number_GF_List =  [200, 300, 400, 600, 800, 1000, 1500, 2000];
+Number_GF_List =  [2000]; # [200, 300, 400, 600, 800, 1000, 1500, 2000];
 
 Num_Repeating = 10 # 20 # 1 # 
 SleepTime = 3 # 10 # 25
@@ -44,7 +44,7 @@ for ri, num_gf in enumerate(Number_GF_List):
             File_Calib = './NewCollege/NewCollege_Mono_calib.txt'
             File_Gamma = ' '
             File_Vignette = ' '
-            Misc_Config = ' mode=1 nolog=1 quiet=1 nogui=0'
+            Misc_Config = ' mode=1 nolog=1 quiet=1 nogui=1'
 
             Path_Image   = '/mnt/DATA/Datasets/New_College/Stereo_Images'
             File_traj = Experiment_dir + '/' + SeqName
@@ -61,5 +61,5 @@ for ri, num_gf in enumerate(Number_GF_List):
             time.sleep(SleepTime)
 
             print bcolors.OKGREEN + "Finished playback, kill the process" + bcolors.ENDC
-            subprocess.call('pkill dso_dataset', shell=True)
+            subprocess.call('pkill run_dso_newcollege', shell=True)
 

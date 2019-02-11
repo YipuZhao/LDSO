@@ -156,15 +156,15 @@ void FullSystem::addActiveFrame(ImageAndExposure *image, int id) {
 
         // write real time tracking results to fileframe
         // TODO
-        Sim3 camToWorld = fh->frame->getPoseOpti().inverse();
+        SE3 T_cw = fh->frame->getPose().inverse();
         f_realTimeTrack << std::setprecision(6)
                         << fh->frame->timeStamp << " "
                         << std::setprecision(7)
-                        << camToWorld.translation().transpose() << " "
-                        << camToWorld.quaternion().x() << " "
-                        << camToWorld.quaternion().y() << " "
-                        << camToWorld.quaternion().z() << " "
-                        << camToWorld.quaternion().w() << std::endl;
+                        << T_cw.translation().transpose() << " "
+                        << T_cw.unit_quaternion().x() << " "
+                        << T_cw.unit_quaternion().y() << " "
+                        << T_cw.unit_quaternion().z() << " "
+                        << T_cw.unit_quaternion().w() << std::endl;
 
         lock.unlock();
         LOG(INFO) << "deliver frame " << fh->frame->id << endl;

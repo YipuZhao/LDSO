@@ -39,7 +39,7 @@ std::string rtpath = "";
 std::string vocPath = "../vocab/orbvoc.dbow3";
 
 int startIdx = 0;
-int endIdx = 10000;
+int endIdx = 1000000;
 
 double rescale = 1;
 bool reversePlay = false;

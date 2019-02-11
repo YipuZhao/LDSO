@@ -6,6 +6,8 @@
 #include <fstream>
 #include <dirent.h>
 #include <algorithm>
+#include <iomanip>
+
 #include <boost/format.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/regex.hpp>
@@ -343,8 +345,8 @@ private:
             std::size_t found = files[i].find_last_of("/\\");
             // rectified_StereoImage__1225719815.864878-left.pnm
             //std::cout << files[i] << "; filename: " << files[i].substr(found+1) << '\n';
-            double stamp = double( std::stol( files[i].substr(found+24, files[i].length()-9) ) );
-            //std::cout << "time stamp = " << stamp << std::endl;
+            double stamp = double( std::stod( files[i].substr(found+24, files[i].length()-9) ) );
+            // std::cout << std::setprecision(18) << "time stamp = " << stamp << std::endl;
             float exposure = 0;
 
             timestamps.push_back(stamp);
