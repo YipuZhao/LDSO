@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <boost/format.hpp>
 #include <boost/filesystem.hpp>
+#include <boost/regex.hpp>
 
 #include "Settings.h"
 #include "frontend/Undistort.h"
@@ -80,7 +81,7 @@ public:
         TUM_MONO,
         KITTI,
         EUROC,
-	NEWCOLLEGE
+        NEWCOLLEGE
     };
 
     ImageFolderReader(DatasetType datasetType,
@@ -247,10 +248,10 @@ private:
     ImageAndExposure *getImage_internal(int id, int unused) {
         MinimalImageB *minimg = getImageRaw_internal(id, 0);
         ImageAndExposure *ret2 = undistort->undistort<unsigned
-        char>(
-                minimg,
-                (exposures.size() == 0 ? 1.0f : exposures[id]),
-                (timestamps.size() == 0 ? 0.0 : timestamps[id]));
+                char>(
+                    minimg,
+                    (exposures.size() == 0 ? 1.0f : exposures[id]),
+                    (timestamps.size() == 0 ? 0.0 : timestamps[id]));
         delete minimg;
         return ret2;
     }
@@ -287,40 +288,40 @@ private:
     }
 
 
-// TODO
-inline void loadTimestampsNewCollege() {
+    // TODO
+    inline void loadTimestampsNewCollege() {
         LOG(INFO) << "Loading NewCollege timestamps!" << endl;
 
         // get the files
-            // get a sorted list of files in the img directories
-    boost::filesystem::path files_dir(path.c_str());
-    if (!boost::filesystem::exists(files_dir))
-    {
-        std::cout << std::endl << "Input directory does not exist: \t" << files_dir << std::endl;
-        return ;
-    }
+        // get a sorted list of files in the img directories
+        boost::filesystem::path files_dir(path.c_str());
+        if (!boost::filesystem::exists(files_dir))
+        {
+            std::cout << std::endl << "Input directory does not exist: \t" << files_dir << std::endl;
+            return ;
+        }
 
-    // get all files in the img directories
-    const boost::regex my_filter( "*-left.pnm" );
-boost::filesystem::directory_iterator end_itr; // Default ctor yields past-the-end
-for( boost::filesystem::directory_iterator i( files_dir ); i != end_itr; ++i )
-{
-    // Skip if not a file
-    if( !boost::filesystem::is_regular_file( i->status() ) ) continue;
+        // get all files in the img directories
+        const boost::regex my_filter( "*-left.pnm" );
+        boost::filesystem::directory_iterator end_itr; // Default ctor yields past-the-end
+        for( boost::filesystem::directory_iterator i( files_dir ); i != end_itr; ++i )
+        {
+            // Skip if not a file
+            if( !boost::filesystem::is_regular_file( i->status() ) ) continue;
 
-    boost::smatch what;
+            boost::smatch what;
 
-    // Skip if no match for V2:
-    if( !boost::regex_match( i->path().string(), what, my_filter ) ) continue;
-    // For V3:
-    //if( !boost::regex_match( i->path().filename(), what, my_filter ) ) continue;
+            // Skip if no match for V2:
+            if( !boost::regex_match( i->path().string(), what, my_filter ) ) continue;
+            // For V3:
+            //if( !boost::regex_match( i->path().filename(), what, my_filter ) ) continue;
 
-    // File matches, store it
-    files.push_back( i->leaf() );
-    cout << i->path().string() << endl;
-}
+            // File matches, store it
+            files.push_back( i->path().string() );
+            cout << i->path().string() << endl;
+        }
 
-/*
+        /*
     filename_list.clear();
     boost::filesystem::directory_iterator end_itr;
     for (boost::filesystem::directory_iterator file(files_dir); file != end_itr; ++file)
@@ -340,9 +341,9 @@ for( boost::filesystem::directory_iterator i( files_dir ); i != end_itr; ++i )
             //
             std::size_t found = files[i].find_last_of("/\\");
             // rectified_StereoImage__1225719815.864878-left.pnm
-                       std::cout << files[i] << "; filename: " << files[i].substr(found+1) << '\n';
+            std::cout << files[i] << "; filename: " << files[i].substr(found+1) << '\n';
             double stamp = double( std::stol( files[i].substr(found+24, files[i].length()-9) ) ) * 1e-9f;
-                       std::cout << "time stamp = " << stamp << std::endl;
+            std::cout << "time stamp = " << stamp << std::endl;
             float exposure = 0;
 
             timestamps.push_back(stamp);
@@ -383,7 +384,7 @@ for( boost::filesystem::directory_iterator i( files_dir ); i != end_itr; ++i )
 
         printf("got %d images and %d timestamps and %d exposures.!\n", (int)getNumImages(), (int)timestamps.size(), (int)exposures.size());
 
-}
+    }
 
 
     inline void loadTimestampsKitti() {
