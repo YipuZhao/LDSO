@@ -585,7 +585,10 @@ void FullSystem::makeKeyFrame(shared_ptr<FrameHessian> fh) {
         for (unsigned int i = 0; i < frames.size(); i++)
             if (frames[i]->frameHessian->flaggedForMarginalization) {
                 LOG(INFO) << "marg frame " << frames[i]->id << endl;
-                CHECK(frames[i] != coarseTracker->lastRef->frame);
+                // LOG(INFO) << "check frame " << coarseTracker->lastRef->frame->id << endl;
+                if (frames[i] == coarseTracker->lastRef->frame)
+                    continue ;
+                // CHECK(frames[i] != coarseTracker->lastRef->frame);
                 marginalizeFrame(frames[i]);
                 i = 0;
             }

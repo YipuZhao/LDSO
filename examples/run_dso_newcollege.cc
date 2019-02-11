@@ -82,7 +82,7 @@ void settingsDefault(int preset)
            "1x", preset);
 
     playbackSpeed = 1;
-    preload = 1;
+    // preload = 1;
     setting_desiredImmatureDensity = int( (float)preset * 0.75 );
     setting_desiredPointDensity = preset;
     setting_minFrames = 5;
