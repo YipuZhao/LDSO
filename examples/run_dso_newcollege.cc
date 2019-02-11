@@ -35,6 +35,7 @@ using namespace ldso;
 std::string source = "";
 std::string output_file = "";
 std::string calib = "";
+std::string rtpath = "";
 std::string vocPath = "./vocab/orbvoc.dbow3";
 
 int startIdx = 0;
@@ -299,6 +300,13 @@ void parseArgument(char *arg) {
         return;
     }
 
+    if(1==sscanf(arg,"realtime=%s",buf))
+    {
+        rtpath = buf;
+        printf("REAL TIME TRACK SAVED AT %s!\n", rtpath.c_str());
+        return;
+    }
+
     printf("could not parse argument \"%s\"!!!!\n", arg);
 }
 
@@ -350,6 +358,12 @@ int main(int argc, char **argv) {
     shared_ptr<FullSystem> fullSystem(new FullSystem(voc));
     fullSystem->setGammaFunction(reader->getPhotometricGamma());
     fullSystem->linearizeOperation = (playbackSpeed == 0);
+
+
+    fullSystem->f_realTimeTrack.open(std::string(rtpath + "_AllFrameTrajectory.txt").c_str());
+    fullSystem->f_realTimeTrack << std::fixed;
+    fullSystem->f_realTimeTrack << "#TimeStamp Tx Ty Tz Qx Qy Qz Qw" << std::endl;
+
 
     shared_ptr<PangolinDSOViewer> viewer = nullptr;
     if (!disableAllDisplay) {
@@ -455,6 +469,10 @@ int main(int argc, char **argv) {
         clock_t ended = clock();
         struct timeval tv_end;
         gettimeofday(&tv_end, NULL);
+
+        fullSystem->f_realTimeTrack.close();
+        fullSystem->saveTimeLog(rtpath + "_Log.txt");
+        fullSystem->printResult(std::string(rtpath + "_KeyFrameTrajectory.txt").c_str());
 
         // in Kitti, the scale drift is obvious, so we only save the trajectory after loop closing.
         fullSystem->printResultKitti(output_file, true);
