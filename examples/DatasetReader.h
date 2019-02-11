@@ -292,7 +292,49 @@ inline void loadTimestampsNewCollege() {
         LOG(INFO) << "Loading NewCollege timestamps!" << endl;
 
         // get the files
-FindAllFilesInDir(path, "-left.pnm", files);
+            // get a sorted list of files in the img directories
+    boost::filesystem::path files_dir(path.c_str());
+    if (!boost::filesystem::exists(files_dir))
+    {
+        std::cout << std::endl << "Input directory does not exist: \t" << files_dir << std::endl;
+        return ;
+    }
+
+    // get all files in the img directories
+    const boost::regex my_filter( "*-left.pnm" );
+boost::filesystem::directory_iterator end_itr; // Default ctor yields past-the-end
+for( boost::filesystem::directory_iterator i( files_dir ); i != end_itr; ++i )
+{
+    // Skip if not a file
+    if( !boost::filesystem::is_regular_file( i->status() ) ) continue;
+
+    boost::smatch what;
+
+    // Skip if no match for V2:
+    if( !boost::regex_match( i->path().string(), what, my_filter ) ) continue;
+    // For V3:
+    //if( !boost::regex_match( i->path().filename(), what, my_filter ) ) continue;
+
+    // File matches, store it
+    files.push_back( i->leaf() );
+    cout << i->path().string() << endl;
+}
+
+/*
+    filename_list.clear();
+    boost::filesystem::directory_iterator end_itr;
+    for (boost::filesystem::directory_iterator file(files_dir); file != end_itr; ++file)
+    {
+        boost::filesystem::path filename_path = file->path().filename();
+        if (boost::filesystem::is_regular_file(file->status()) &&
+                filename_path.extension() == ".pnm" )
+        {
+            std::string filename(filename_path.string());
+            files.push_back(dir + '/' + filename);
+            cout << dir + '/' + filename << endl;
+        }
+    }
+    */
 
         for (int i=0; i<files.size(); ++i) {
             //
@@ -342,42 +384,6 @@ FindAllFilesInDir(path, "-left.pnm", files);
         printf("got %d images and %d timestamps and %d exposures.!\n", (int)getNumImages(), (int)timestamps.size(), (int)exposures.size());
 
 }
-
-static void FindAllFilesInDir( const std::string & dir, const std::string & ext,
-                               std::vector<std::string> & filename_list) {
-
-    // get a sorted list of files in the img directories
-    boost::filesystem::path files_dir(dir.c_str());
-    if (!boost::filesystem::exists(files_dir))
-    {
-        std::cout << std::endl << "Input directory does not exist: \t" << files_dir << std::endl;
-        return ;
-    }
-
-    // get all files in the img directories
-    filename_list.clear();
-    boost::filesystem::directory_iterator end_itr;
-    for (boost::filesystem::directory_iterator file(files_dir); file != end_itr; ++file)
-    {
-        boost::filesystem::path filename_path = file->path().filename();
-        if (boost::filesystem::is_regular_file(file->status()) &&
-                filename_path.extension() == ext.c_str() )
-        {
-            std::string filename(filename_path.string());
-            filename_list.push_back(dir + '/' + filename);
-            cout << dir + '/' + filename << endl;
-        }
-    }
-    //
-    // NOTE
-    // the following line is mandatory! thought most of the entries are listed in order, there
-    // are some mis-aligned ones exist, which have to be fixed with the explicit sorting !!!
-    //
-    // filename_list.sort();
-
-    std::cout << std::endl << "Found " << filename_list.size() << " files under the given dir with extension " << ext << std::endl;
-}
-
 
 
     inline void loadTimestampsKitti() {

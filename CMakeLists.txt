@@ -50,7 +50,7 @@ set(Pangolin_LIBRARIES /opt/Pangolin/lib/libpangolin.so)
 MESSAGE("Pangolin include dir: " ${Pangolin_INCLUDE_DIRS})
 
 # customize boost dir
-find_package(Boost    REQUIRED COMPONENTS thread system filesystem)
+find_package(Boost    REQUIRED COMPONENTS thread system filesystem regex)
 MESSAGE("Boost include dir: " ${Boost_INCLUDE_DIRS})
 MESSAGE("Boost lib: " ${Boost_LIBRARIES})
 
