@@ -8,7 +8,7 @@ import signal
 SeqNameList = ['left_cam'];
 Result_root = '/mnt/DATA/tmp/NewCollege/LDSO_Mono_Baseline/'
 
-Number_GF_List =  [200, 300, 400, 600, 800, 1000, 1500, 2000]; # [2000]; # 
+Number_GF_List =  [1500, 2000]; # [200, 300, 400, 600, 800, 1000, 1500, 2000]; # 
 
 Num_Repeating = 10 # 20 # 1 # 
 SleepTime = 3 # 10 # 25
