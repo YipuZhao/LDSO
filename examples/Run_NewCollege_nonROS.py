@@ -44,7 +44,7 @@ for ri, num_gf in enumerate(Number_GF_List):
             File_Calib = './NewCollege/NewCollege_Mono_calib.txt'
             File_Gamma = ' '
             File_Vignette = ' '
-            Misc_Config = ' mode=1 nolog=1 quiet=1 nogui=1'
+            Misc_Config = ' mode=1 nolog=1 quiet=1 nogui=0'
 
             Path_Image   = '/mnt/DATA/Datasets/New_College/Stereo_Images'
             File_traj = Experiment_dir + '/' + SeqName

@@ -292,14 +292,15 @@ inline void loadTimestampsNewCollege() {
         LOG(INFO) << "Loading NewCollege timestamps!" << endl;
 
         // get the files
-FindAllFilesInDir(path, ".png", files);
+FindAllFilesInDir(path, "-left.pnm", files);
 
         for (int i=0; i<files.size(); ++i) {
             //
             std::size_t found = files[i].find_last_of("/\\");
-            //            std::cout << files[i] << "; filename: " << files[i].substr(found+1) << '\n';
-            double stamp = double( std::stol( files[i].substr(found+1, files[i].length()-4) ) ) * 1e-9f;
-            //            std::cout << "time stamp = " << stamp << std::endl;
+            // rectified_StereoImage__1225719815.864878-left.pnm
+                       std::cout << files[i] << "; filename: " << files[i].substr(found+1) << '\n';
+            double stamp = double( std::stol( files[i].substr(found+24, files[i].length()-9) ) ) * 1e-9f;
+                       std::cout << "time stamp = " << stamp << std::endl;
             float exposure = 0;
 
             timestamps.push_back(stamp);

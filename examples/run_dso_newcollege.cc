@@ -36,7 +36,7 @@ std::string source = "";
 std::string output_file = "";
 std::string calib = "";
 std::string rtpath = "";
-std::string vocPath = "./vocab/orbvoc.dbow3";
+std::string vocPath = "../vocab/orbvoc.dbow3";
 
 int startIdx = 0;
 int endIdx = 10000;
