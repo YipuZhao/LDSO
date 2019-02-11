@@ -302,24 +302,25 @@ private:
         }
 
         // get all files in the img directories
-        const boost::regex my_filter( "*-left.pnm" );
+        const boost::regex my_filter( "rectified_StereoImage__.*-left\.pnm" );
         boost::filesystem::directory_iterator end_itr; // Default ctor yields past-the-end
         for( boost::filesystem::directory_iterator i( files_dir ); i != end_itr; ++i )
         {
             // Skip if not a file
-            if( !boost::filesystem::is_regular_file( i->status() ) ) continue;
+            if( !boost::filesystem::is_regular_file( i->status() ) ) 
+                continue;
 
             boost::smatch what;
-
-            // Skip if no match for V2:
-            if( !boost::regex_match( i->path().string(), what, my_filter ) ) continue;
-            // For V3:
-            //if( !boost::regex_match( i->path().filename(), what, my_filter ) ) continue;
+            if( !boost::regex_match( i->path().filename().string(), what, my_filter ) ) 
+                continue;
 
             // File matches, store it
             files.push_back( i->path().string() );
-            cout << i->path().string() << endl;
+            // cout << i->path().string() << endl;
         }
+
+        // 
+        std::sort(files.begin(), files.end());
 
         /*
     filename_list.clear();
@@ -341,9 +342,9 @@ private:
             //
             std::size_t found = files[i].find_last_of("/\\");
             // rectified_StereoImage__1225719815.864878-left.pnm
-            std::cout << files[i] << "; filename: " << files[i].substr(found+1) << '\n';
-            double stamp = double( std::stol( files[i].substr(found+24, files[i].length()-9) ) ) * 1e-9f;
-            std::cout << "time stamp = " << stamp << std::endl;
+            //std::cout << files[i] << "; filename: " << files[i].substr(found+1) << '\n';
+            double stamp = double( std::stol( files[i].substr(found+24, files[i].length()-9) ) );
+            //std::cout << "time stamp = " << stamp << std::endl;
             float exposure = 0;
 
             timestamps.push_back(stamp);
