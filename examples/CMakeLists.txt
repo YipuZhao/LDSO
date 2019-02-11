@@ -13,3 +13,10 @@ add_executable( run_dso_kitti run_dso_kitti.cc )
 target_link_libraries( run_dso_kitti
   ldso 
   ${THIRD_PARTY_LIBS} )
+
+
+# New College dataset
+add_executable( run_dso_newcollege run_dso_newcollege.cc )
+target_link_libraries( run_dso_newcollege
+  ldso 
+  ${THIRD_PARTY_LIBS} )

@@ -354,6 +354,7 @@ static void FindAllFilesInDir( const std::string & dir, const std::string & ext,
     }
 
     // get all files in the img directories
+    filename_maxlen = 0;
     filename_list.clear();
     boost::filesystem::directory_iterator end_itr;
     for (boost::filesystem::directory_iterator file(files_dir); file != end_itr; ++file)

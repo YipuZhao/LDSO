@@ -49,6 +49,11 @@ set(Pangolin_INCLUDE_DIRS /opt/Pangolin/include/)
 set(Pangolin_LIBRARIES /opt/Pangolin/lib/libpangolin.so)
 MESSAGE("Pangolin include dir: " ${Pangolin_INCLUDE_DIRS})
 
+# customize boost dir
+find_package(Boost    REQUIRED COMPONENTS thread system filesystem)
+MESSAGE("Boost include dir: " ${Boost_INCLUDE_DIRS})
+MESSAGE("Boost lib: " ${Boost_LIBRARIES})
+
 find_package(Glog REQUIRED)
 
 # optional libs
@@ -71,6 +76,7 @@ include_directories(
         ${OpenCV_INCLUDE_DIR}
         ${Glog_INCLUDE_DIRS}
         ${Pangolin_INCLUDE_DIRS}
+${Boost_INCLUDE_DIRS}
 
         ${PROJECT_SOURCE_DIR}/include
         ${PROJECT_SOURCE_DIR}/thirdparty/
@@ -84,6 +90,7 @@ set( THIRD_PARTY_LIBS
         ${OpenCV_LIBS}
         ${GLOG_LIBRARY}
         ${Pangolin_LIBRARIES}
+${Boost_LIBRARIES}
         ${PROJECT_SOURCE_DIR}/thirdparty/g2o/lib/libg2o${CMAKE_SHARED_LIBRARY_SUFFIX}
         ${PROJECT_SOURCE_DIR}/thirdparty/DBoW3/build/src/libDBoW3${CMAKE_SHARED_LIBRARY_SUFFIX}
         ${LIBZIP_LIBRARY}
