@@ -2,17 +2,11 @@
 #ifndef LDSO_SETTING_H_
 #define LDSO_SETTING_H_
 
-//#define ON_EuRoC
-//#define ON_TUM_RGBD
-//#define ON_NUIM
-#define ON_NEWCOLLEGE
-
-
 /// a lot many parameters set in DSO
 namespace ldso {
 
     const int PYR_LEVELS = 6;  // total image pyramids, note not all are used during tracking
-    const int NUM_THREADS = 6;
+    const int NUM_THREADS = 3; // 6;
 
     // the config bits in solver
     const int SOLVER_SVD = 1;

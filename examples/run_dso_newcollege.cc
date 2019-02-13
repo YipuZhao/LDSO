@@ -79,9 +79,9 @@ void settingsDefault(int preset)
            "- 5-7 active frames\n"
            "- 1-6 LM iteration each KF\n"
            "- original image resolution\n",
-           "1x", preset);
+           "1x");
 
-    playbackSpeed = 1;
+    playbackSpeed = 1; // 0; // 
     // preload = 1;
     setting_desiredImmatureDensity = int( (float)preset * 0.75 );
     setting_desiredPointDensity = preset;
@@ -91,6 +91,13 @@ void settingsDefault(int preset)
     setting_minOptIterations=1;
 
     setting_logStuff = false;
+
+    setting_enableLoopClosing = 1;
+    setting_fastLoopClosing = 1;
+    setting_pointSelection = 1;
+
+    // setting_keyframesPerSecond = 0;
+    // printf("setting_keyframesPerSecond = %d\n", setting_keyframesPerSecond);
 
     printf("==============================================\n");
 }
