@@ -80,6 +80,14 @@ void FullSystem::addActiveFrame(ImageAndExposure *image, int id) {
     frame->CreateFH(frame);
     allFrameHistory.push_back(frame);
 
+    // Hack suggested by GaoXiang; remove old keyframes to reduce memory consumption
+  /*  
+  if (allFrameHistory.size() > 10*MAX_ACTIVE_FRAMES) {
+        for (auto & frameH : allFrameHistory)
+            frameH->ReleaseAll();  
+        allFrameHistory.erase(allFrameHistory.begin(), allFrameHistory.begin()+9*MAX_ACTIVE_FRAMES);
+    } */
+
     // ==== make images ==== //
     shared_ptr<FrameHessian> fh = frame->frameHessian;
     fh->ab_exposure = image->exposure_time;
